@@ -4,14 +4,15 @@ config:
   #   targets: "192.168.219.102:6379,192.168.219.102:6380"
   payload:
     path: "../data/characterData.csv"
+    # order: sequence # 외부 데이터 중복값 방지 ?
     fields:
       - "username"
       - "userId"
       - "characterId"
   target: "http://sparta-jyh.shop"
   phases:
-    - duration: 2 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 1 # 1초당 몇 명의 부하를 줄 것인지
+    - duration: 10 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 10 # 1초당 몇 명의 부하를 줄 것인지
   engines:
    socketio-v3: {}
   #  rediscluster: {}
@@ -55,6 +56,7 @@ scenarios:
           data: 
             "line": "d"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 1
 
       # 던전 난이도 선택
       - emit:
@@ -62,6 +64,7 @@ scenarios:
           data: 
             "line": "입장 1"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 1
 
       # 전투 빙식 선택
       - emit:
@@ -69,6 +72,7 @@ scenarios:
           data: 
             "line": "수동"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 1
 
       # 수동 or 자동 선택
       - emit:
@@ -79,12 +83,12 @@ scenarios:
       # 15초 동안 아무것도 하지 않은 다음 연결 해제
       - think: 30
 
-      # 전투 후 도망 선택
-      - emit:
-          channel: "encounter"
-          data: 
-            "line": "도망"
-            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      # # 전투 후 도망 선택
+      # - emit:
+      #     channel: "encounter"
+      #     data: 
+      #       "line": "도망"
+      #       "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
 
 # 로드 테스트 로그 파일 명령어 npx artillery run -o login-fight/login-fight-report login-fight/login-fight.yml
