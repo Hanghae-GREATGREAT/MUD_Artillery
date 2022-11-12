@@ -1,20 +1,20 @@
 # my-scenario.yml
 config:
-  redis:
-    targets: "192.168.219.102:6379,192.168.219.102:6380"
+  # redis:
+  #   targets: "192.168.219.102:6379,192.168.219.102:6380"
   payload:
-    path: "characterData.csv"
+    path: "../data/characterData.csv"
     fields:
       - "username"
       - "userId"
       - "characterId"
-  target: "http://192.168.219.102:8080"
+  target: "http://sparta-jyh.shop"
   phases:
-    - duration: 1 # 몇 초 동안 테스트 할것인지
+    - duration: 2 # 몇 초 동안 테스트 할것인지
       arrivalRate: 1 # 1초당 몇 명의 부하를 줄 것인지
   engines:
    socketio-v3: {}
-   rediscluster: {}
+  #  rediscluster: {}
 
 scenarios:
   - name: My sample scenario
@@ -54,21 +54,21 @@ scenarios:
           channel: "front"
           data: 
             "line": "d"
-            "user": {}
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
       # 던전 난이도 선택
       - emit:
           channel: "dungeon"
           data: 
-            "line": "입장 "
-            "user": {"username": "{{ username }}"}
+            "line": "입장 1"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
       # 전투 빙식 선택
       - emit:
           channel: "battle"
           data: 
             "line": "수동"
-            "user": {"username": "{{ username }}"}
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
       # 수동 or 자동 선택
       - emit:
@@ -76,14 +76,19 @@ scenarios:
           data: 
             "line": "공격"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-            
-      # 10초 동안 아무것도 하지 않은 다음 연결 해제
-      - think: 15
+      # 15초 동안 아무것도 하지 않은 다음 연결 해제
+      - think: 30
+
+      # 전투 후 도망 선택
+      - emit:
+          channel: "encounter"
+          data: 
+            "line": "도망"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
 
+# 로드 테스트 로그 파일 명령어 npx artillery run -o login-fight/login-fight-report login-fight/login-fight.yml
+# 로그 테스트 html view - npx artillery report login-fight/login-fight-report 
+#                      && npx artillery run --output login-fight-report.json login-fight.yml
 
-
-# 로드 테스트 로그 파일 명령어 npx artillery run -o login-fight-report login-fight.yml
-# 로그 테스트 html view - npx artillery report login-fight-report && npx artillery run --output login-fight-report.json login-fight.yml
-
-# 로드 테스트 실행 명령어 npx artillery run login-fight.yml
+# 로드 테스트 실행 명령어 npx artillery run login-fight/login-fight.yml
