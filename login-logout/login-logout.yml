@@ -1,0 +1,69 @@
+# my-scenario.yml
+config:
+  payload:
+    path: "characterData.csv"
+    order: "sequence" # 외부 데이터 중복값 방지 ?
+    fields:
+      - "username"
+      - "userId"
+      - "characterId"
+  target: "http://sparta-jyh.shop"
+  phases:
+    - duration: 60 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 10 # 1초당 몇 명의 부하를 줄 것인지
+  defaults:
+    headers:
+      "User-Agent": "Artillery"
+  engines:
+   socketio-v3: {}
+
+scenarios:
+  - name: My sample scenario
+    engine: socketio-v3
+    flow:
+      # 첫 화면
+      - emit:
+          channel: "none"
+          data: 
+            "line": "load"
+            "user": {}
+
+      # 로그인 선택
+      - emit:
+          channel: "front"
+          data: 
+            "line": "in"
+
+      # 아이디 입력
+      - emit:
+          channel: "sign"
+          data:
+            "line": "{{ username }}"
+            "option": "20"
+            "user": {}
+                
+
+      # 비밀번호 입력
+      - emit:
+          channel: "sign"
+          data: 
+            "option": "21"
+            "line": "1234"
+            "user": {"username": "{{ username }}"}
+
+      # 로그아웃
+      - emit:
+          channel: "front"
+          data: 
+            "line": "out"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+
+      - think: 10
+
+
+
+
+# 로드 테스트 로그 파일 명령어 npx artillery run -o login-logoutreport login-logout.yml
+# 로그 테스트 html view - npx artillery report login-logoutreport && npx artillery run --output login-logout-report.json login-logout.yml
+
+# 로드 테스트 실행 명령어 npx artillery run login-logout.yml

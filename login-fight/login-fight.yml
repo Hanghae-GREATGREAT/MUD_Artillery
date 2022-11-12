@@ -1,0 +1,89 @@
+# my-scenario.yml
+config:
+  redis:
+    targets: "192.168.219.102:6379,192.168.219.102:6380"
+  payload:
+    path: "characterData.csv"
+    fields:
+      - "username"
+      - "userId"
+      - "characterId"
+  target: "http://192.168.219.102:8080"
+  phases:
+    - duration: 1 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 1 # 1초당 몇 명의 부하를 줄 것인지
+  engines:
+   socketio-v3: {}
+   rediscluster: {}
+
+scenarios:
+  - name: My sample scenario
+    engine: socketio-v3
+    flow:
+      # 첫 화면
+      - emit:
+          channel: "none"
+          data: 
+            "line": "load"
+            "user": "{}"
+
+      # 로그인 선택
+      - emit:
+          channel: "front"
+          data: 
+            "line": "in"
+
+      # 아이디 입력
+      - emit:
+          channel: "sign"
+          data:
+            "line": "{{ username }}"
+            "user": {}
+            "option": "20"
+
+      # 비밀번호 입력
+      - emit:
+          channel: "sign"
+          data: 
+            "line": "1234"
+            "user": {"username": "{{ username }}"}
+            "option": "21"
+
+      # 던전 입장 선택
+      - emit:
+          channel: "front"
+          data: 
+            "line": "d"
+            "user": {}
+
+      # 던전 난이도 선택
+      - emit:
+          channel: "dungeon"
+          data: 
+            "line": "입장 "
+            "user": {"username": "{{ username }}"}
+
+      # 전투 빙식 선택
+      - emit:
+          channel: "battle"
+          data: 
+            "line": "수동"
+            "user": {"username": "{{ username }}"}
+
+      # 수동 or 자동 선택
+      - emit:
+          channel: "encounter"
+          data: 
+            "line": "공격"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+            
+      # 10초 동안 아무것도 하지 않은 다음 연결 해제
+      - think: 15
+
+
+
+
+# 로드 테스트 로그 파일 명령어 npx artillery run -o login-fight-report login-fight.yml
+# 로그 테스트 html view - npx artillery report login-fight-report && npx artillery run --output login-fight-report.json login-fight.yml
+
+# 로드 테스트 실행 명령어 npx artillery run login-fight.yml

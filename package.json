@@ -1,0 +1,19 @@
+{
+  "name": "artillery_prac",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "artillery": "^2.0.0-26",
+    "artillery-engine-socketio-v3": "^1.1.2"
+  },
+  "dependencies": {
+    "artillery-engine-rediscluster": "^1.0.3"
+  }
+}

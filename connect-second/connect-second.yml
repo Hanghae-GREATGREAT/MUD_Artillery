@@ -1,0 +1,15 @@
+config:
+  target: "http://192.168.219.102:8080"
+  phases:
+    - duration: 3600
+      arrivalRate: 5
+scenarios:
+  - engine: "socketio"
+    flow:
+      - think: 600 # 600초 동안 연결 대기만 시키기
+
+
+# 로드 테스트 로그 파일 명령어 npx artillery run -o connect-second-report connect-second.yml
+# 로그 테스트 html view - npx artillery report connect-second-report && npx artillery run --output connect-second-report.json login-fight.yml
+
+# 로드 테스트 실행 명령어 npx artillery run connect-second.yml

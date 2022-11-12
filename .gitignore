@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+
+hax0r-report
+hax0r-report.html
+
+login-fight-report
+login-logoutreport
+
+report-viewer/node_modules
+
+
