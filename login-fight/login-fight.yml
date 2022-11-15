@@ -11,8 +11,9 @@ config:
       - "characterId"
   target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
   phases:
-    - duration: 120 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 1 # 1초당 몇 명의 부하를 줄 것인지
+    - duration: 60 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 2 # 1초당 몇 명의 부하를 줄 것인지
+      maxVusers: 100 # 최대 접속할수 있는 유저 수
   engines:
    socketio-v3: {}
   #  rediscluster: {}
@@ -74,26 +75,25 @@ scenarios:
       - emit:
           channel: "battle"
           data: 
-            "line": "수동"
+            "line": "자동"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
       - think: 5
 
-      # 수동 or 자동 선택
-      - emit:
-          channel: "encounter"
-          data: 
-            "line": "공격"
-            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-      # 15초 동안 아무것도 하지 않은 다음 연결 해제
-      - think: 30
+      # # 수동 or 자동 선택
+      # - emit:
+      #     channel: "encounter"
+      #     data: 
+      #       "line": "공격"
+      #       "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      # # 15초 동안 아무것도 하지 않은 다음 연결 해제
+      # - think: 30
 
       # 전투 후 도망 선택
       - emit:
           channel: "encounter"
           data: 
-            "line": "도망"
+            "line": "중단"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-      - think: 5
 
       # 로그아웃
       - emit:
