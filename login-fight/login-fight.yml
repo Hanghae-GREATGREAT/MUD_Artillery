@@ -4,7 +4,8 @@ config:
   #   targets: "192.168.219.102:6379,192.168.219.102:6380"
   payload:
     path: "../data/characterData.csv"
-    # order: sequence # 외부 데이터 중복값 방지 ?
+    # order: sequence # 
+    # skipHeader: true # 
     fields:
       - "username"
       - "userId"
@@ -12,7 +13,7 @@ config:
   target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
   phases:
     - duration: 60 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 2 # 1초당 몇 명의 부하를 줄 것인지
+      arrivalRate: 100 # 1초당 몇 명의 부하를 줄 것인지
       maxVusers: 100 # 최대 접속할수 있는 유저 수
   engines:
    socketio-v3: {}
@@ -22,38 +23,38 @@ scenarios:
   - name: My sample scenario
     engine: socketio-v3
     flow:
-      # 첫 화면
-      - emit:
-          channel: "none"
-          data: 
-            "line": "load"
-            "user": "{}"
-      - think: 5
+      # # 첫 화면
+      # - emit:
+      #     channel: "none"
+      #     data: 
+      #       "line": "load"
+      #       "user": "{}"
+      # - think: 5
 
-      # 로그인 선택
-      - emit:
-          channel: "front"
-          data: 
-            "line": "in"
-      - think: 5
+      # # 로그인 선택
+      # - emit:
+      #     channel: "front"
+      #     data: 
+      #       "line": "in"
+      # - think: 5
 
-      # 아이디 입력
-      - emit:
-          channel: "sign"
-          data:
-            "line": "{{ username }}"
-            "user": {}
-            "option": "20"
-      - think: 5
+      # # 아이디 입력
+      # - emit:
+      #     channel: "sign"
+      #     data:
+      #       "line": "{{ username }}"
+      #       "user": {}
+      #       "option": "20"
+      # - think: 5
 
-      # 비밀번호 입력
-      - emit:
-          channel: "sign"
-          data: 
-            "line": "1234"
-            "user": {"username": "{{ username }}"}
-            "option": "21"
-      - think: 5
+      # # 비밀번호 입력
+      # - emit:
+      #     channel: "sign"
+      #     data: 
+      #       "line": "1234"
+      #       "user": {"username": "{{ username }}"}
+      #       "option": "21"
+      # - think: 5
 
       # 던전 입장 선택
       - emit:
@@ -61,7 +62,6 @@ scenarios:
           data: 
             "line": "d"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-      - think: 5
 
       # 던전 난이도 선택
       - emit:
@@ -69,7 +69,6 @@ scenarios:
           data: 
             "line": "입장 1"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-      - think: 5
 
       # 전투 빙식 선택
       - emit:
@@ -77,7 +76,7 @@ scenarios:
           data: 
             "line": "자동"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-      - think: 5
+      - think: 60
 
       # # 수동 or 자동 선택
       # - emit:
@@ -88,19 +87,19 @@ scenarios:
       # # 15초 동안 아무것도 하지 않은 다음 연결 해제
       # - think: 30
 
-      # 전투 후 도망 선택
-      - emit:
-          channel: "encounter"
-          data: 
-            "line": "중단"
-            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      # # 전투 후 도망 선택
+      # - emit:
+      #     channel: "autoBattle"
+      #     data: 
+      #       "line": "중단"
+      #       "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
-      # 로그아웃
-      - emit:
-          channel: "front"
-          data: 
-            "line": "out"
-            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      # # 로그아웃
+      # - emit:
+      #     channel: "front"
+      #     data: 
+      #       "line": "out"
+      #       "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
 
 # 로드 테스트 로그 파일 명령어 npx artillery run -o login-fight/login-fight-report login-fight/login-fight.yml
@@ -108,3 +107,8 @@ scenarios:
 #                      && npx artillery run --output login-fight-report.json login-fight.yml
 
 # 로드 테스트 실행 명령어 npx artillery run login-fight/login-fight.yml
+
+# t2.micro test => npx artillery run -o login-fight/t2-micro-report login-fight/login-fight.yml
+# t2.micto report => npx artillery report login-fight/t2.micro-report
+
+# npx artillery run --output t2.micro-report.json login-fight/login-fight.yml

@@ -1,0 +1,162 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.My sample scenario": 378,
+      "vusers.created": 378,
+      "engine.socketio.emit": 453,
+      "vusers.skipped": 222,
+      "errors.Error: xhr poll error": 374,
+      "vusers.failed": 378,
+      "errors.xhr poll error": 85,
+      "errors.Error: xhr post error": 4,
+      "errors.xhr post error": 1
+    },
+    "rates": {
+      "engine.socketio.emit_rate": 10
+    },
+    "firstCounterAt": 1668596703212,
+    "lastCounterAt": 1668596762806,
+    "firstMetricAt": 1668596703212,
+    "lastMetricAt": 1668596762806,
+    "period": 1668596760000,
+    "summaries": {},
+    "histograms": {}
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.My sample scenario": 22,
+        "vusers.created": 22,
+        "engine.socketio.emit": 50,
+        "vusers.skipped": 48,
+        "errors.Error: xhr poll error": 22,
+        "vusers.failed": 22
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 10
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668596703212,
+      "lastCounterAt": 1668596709809,
+      "firstMetricAt": 1668596703212,
+      "lastMetricAt": 1668596709809,
+      "period": "1668596700000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.My sample scenario": 44,
+        "vusers.created": 44,
+        "errors.Error: xhr poll error": 34,
+        "vusers.failed": 34,
+        "engine.socketio.emit": 73,
+        "vusers.skipped": 56,
+        "errors.xhr poll error": 1
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 10
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668596710210,
+      "lastCounterAt": 1668596719855,
+      "firstMetricAt": 1668596710210,
+      "lastMetricAt": 1668596719855,
+      "period": "1668596710000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 52,
+        "engine.socketio.emit": 89,
+        "errors.Error: xhr poll error": 52,
+        "vusers.failed": 53,
+        "vusers.created_by_name.My sample scenario": 48,
+        "vusers.created": 48,
+        "errors.xhr poll error": 13,
+        "errors.Error: xhr post error": 1
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 11
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668596720210,
+      "lastCounterAt": 1668596729928,
+      "firstMetricAt": 1668596720210,
+      "lastMetricAt": 1668596729928,
+      "period": "1668596720000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.My sample scenario": 73,
+        "vusers.created": 73,
+        "engine.socketio.emit": 108,
+        "vusers.skipped": 27,
+        "errors.xhr poll error": 23,
+        "errors.Error: xhr poll error": 67,
+        "vusers.failed": 69,
+        "errors.Error: xhr post error": 2,
+        "errors.xhr post error": 1
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 13
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668596730124,
+      "lastCounterAt": 1668596739976,
+      "firstMetricAt": 1668596730124,
+      "lastMetricAt": 1668596739976,
+      "period": "1668596730000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 29,
+        "engine.socketio.emit": 96,
+        "errors.xhr poll error": 26,
+        "errors.Error: xhr poll error": 76,
+        "vusers.failed": 77,
+        "vusers.created_by_name.My sample scenario": 71,
+        "vusers.created": 71,
+        "errors.Error: xhr post error": 1
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 16
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668596740210,
+      "lastCounterAt": 1668596749945,
+      "firstMetricAt": 1668596740210,
+      "lastMetricAt": 1668596749945,
+      "period": "1668596740000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.My sample scenario": 90,
+        "vusers.created": 90,
+        "errors.Error: xhr poll error": 93,
+        "vusers.failed": 93,
+        "engine.socketio.emit": 37,
+        "vusers.skipped": 10,
+        "errors.xhr poll error": 22
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 16
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668596750210,
+      "lastCounterAt": 1668596759802,
+      "firstMetricAt": 1668596750210,
+      "lastMetricAt": 1668596759802,
+      "period": "1668596750000",
+      "summaries": {},
+      "histograms": {}
+    }
+  ]
+}

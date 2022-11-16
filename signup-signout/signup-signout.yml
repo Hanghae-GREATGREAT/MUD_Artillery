@@ -1,8 +1,7 @@
 # my-scenario.yml
 config:
   payload:
-    path: "../data/characterData.csv"
-    # order: "sequence" # 외부 데이터 중복값 방지 ?
+    path: "signup-signout.csv"
     fields:
       - "username"
       - "userId"
@@ -10,8 +9,8 @@ config:
   target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
   phases:
     - duration: 60 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 100 # 1초당 몇 명의 부하를 줄 것인지
-      maxVusers: 100 # 최대 접속할수 있는 유저 수
+      arrivalRate: 10 # 1초당 몇 명의 부하를 줄 것인지
+      maxVusers: 10 # 최대 접속할수 있는 유저 수
   defaults:
     headers:
       "User-Agent": "Artillery"
@@ -27,45 +26,54 @@ scenarios:
           channel: "none"
           data: 
             "line": "load"
-            "user": {}
+            "user": "{}"
+      - think: 1
 
-      # 회원가입 선택
+      # 로그인 선택
       - emit:
           channel: "front"
           data: 
-            "line": "in"
+            "line": "up"
+      - think: 1
 
       # 아이디 입력
       - emit:
           channel: "sign"
           data:
             "line": "{{ username }}"
-            "option": "20"
             "user": {}
-                
+            "option": "10"
+      - think: 1
 
       # 비밀번호 입력
       - emit:
           channel: "sign"
           data: 
-            "option": "21"
             "line": "1234"
             "user": {"username": "{{ username }}"}
+            "option": "11"
+      - think: 1
 
-      # 로그아웃
+      # 닉네임 입력
+      - emit:
+          channel: "sign"
+          data: 
+            "line": "1234"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}"}
+            "option": "12"
+      - think: 50
+
+      # 회원탈퇴
       - emit:
           channel: "front"
           data: 
-            "line": "out"
+            "line": "delete"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
-      # - think: 10
 
 
 
+# 로드 테스트 로그 파일 명령어 npx artillery run -o signup-signout/60-to-100 signup-signout/signup-signout.yml
+# 로그 테스트 html view - npx artillery report signup-signout/60-to-100 
 
-# 로드 테스트 로그 파일 명령어 npx artillery run -o login-logout/login-logoutreport login-logout/login-logout.yml
-# 로그 테스트 html view - npx artillery report login-logout/login-logoutreport 
-#                      && npx artillery run --output login-logout-report.json login-logout/login-logout.yml
-
-# 로드 테스트 실행 명령어 npx artillery run login-logout/login-logout.yml
+# 로드 테스트 실행 명령어 npx artillery run signup-signout/signup-signout.yml
