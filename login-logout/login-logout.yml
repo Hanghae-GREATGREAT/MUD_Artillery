@@ -2,16 +2,18 @@
 config:
   payload:
     path: "../data/characterData.csv"
-    # order: "sequence" # 외부 데이터 중복값 방지 ?
+    # order: sequence # 
+    # skipHeader: true # 
     fields:
       - "username"
       - "userId"
       - "characterId"
-  target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
+  target: "http://192.168.219.102:8080"
   phases:
     - duration: 60 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 100 # 1초당 몇 명의 부하를 줄 것인지
-      maxVusers: 100 # 최대 접속할수 있는 유저 수
+      # arrivalCount: 1 # duration 기간 동안 생성할 유저 수
+      arrivalRate: 2000 # 1초당 몇 명의 부하를 줄 것인지
+      # maxVusers: 10 # 최대 접속할수 있는 유저 수
   defaults:
     headers:
       "User-Agent": "Artillery"
@@ -19,21 +21,24 @@ config:
    socketio-v3: {}
 
 scenarios:
-  - name: My sample scenario
+  - name: 60초동안 1초마다 로그인-로그아웃 요청
     engine: socketio-v3
     flow:
-      # 첫 화면
+    # - loop:
+    # 첫 화면
       - emit:
           channel: "none"
           data: 
             "line": "load"
             "user": {}
+      - think: 1
 
-      # 회원가입 선택
+      # 로그인 선택
       - emit:
           channel: "front"
           data: 
             "line": "in"
+      - think: 1
 
       # 아이디 입력
       - emit:
@@ -42,7 +47,7 @@ scenarios:
             "line": "{{ username }}"
             "option": "20"
             "user": {}
-                
+      - think: 1
 
       # 비밀번호 입력
       - emit:
@@ -51,21 +56,26 @@ scenarios:
             "option": "21"
             "line": "1234"
             "user": {"username": "{{ username }}"}
-
+      - think: 1
+      
       # 로그아웃
       - emit:
           channel: "front"
           data: 
             "line": "out"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-
+      - think: 1
+    # count: 60
       # - think: 10
 
 
 
 
 # 로드 테스트 로그 파일 명령어 npx artillery run -o login-logout/login-logoutreport login-logout/login-logout.yml
-# 로그 테스트 html view - npx artillery report login-logout/login-logoutreport 
-#                      && npx artillery run --output login-logout-report.json login-logout/login-logout.yml
+# 로그 테스트 html view - npx artillery report login-logout/login-logoutreport
 
 # 로드 테스트 실행 명령어 npx artillery run login-logout/login-logout.yml
+
+# npx artillery run -o login-logout/60-to-10-report-server login-logout/login-logout.yml
+
+# npx artillery report login-logout/60-to-10-report-server

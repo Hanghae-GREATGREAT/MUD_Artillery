@@ -10,9 +10,9 @@ config:
       - "username"
       - "userId"
       - "characterId"
-  target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
+  target: "http://localhost:8080"
   phases:
-    - duration: 60 # 몇 초 동안 테스트 할것인지
+    - duration: 120 # 몇 초 동안 테스트 할것인지
       arrivalRate: 100 # 1초당 몇 명의 부하를 줄 것인지
       maxVusers: 100 # 최대 접속할수 있는 유저 수
   engines:
@@ -62,6 +62,7 @@ scenarios:
           data: 
             "line": "d"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 2
 
       # 던전 난이도 선택
       - emit:
@@ -69,6 +70,7 @@ scenarios:
           data: 
             "line": "입장 1"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 2
 
       # 전투 빙식 선택
       - emit:
@@ -87,12 +89,12 @@ scenarios:
       # # 15초 동안 아무것도 하지 않은 다음 연결 해제
       # - think: 30
 
-      # # 전투 후 도망 선택
-      # - emit:
-      #     channel: "autoBattle"
-      #     data: 
-      #       "line": "중단"
-      #       "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      # 자동전투 중단
+      - emit:
+          channel: "autoBattle"
+          data: 
+            "line": "중단"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
       # # 로그아웃
       # - emit:
@@ -111,4 +113,6 @@ scenarios:
 # t2.micro test => npx artillery run -o login-fight/t2-micro-report login-fight/login-fight.yml
 # t2.micto report => npx artillery report login-fight/t2.micro-report
 
-# npx artillery run --output t2.micro-report.json login-fight/login-fight.yml
+# npx artillery run -o login-fight/60-to-10-report login-fight/login-fight.yml
+
+# npx artillery report login-fight/60-to-10-report

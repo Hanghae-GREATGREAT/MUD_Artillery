@@ -1,0 +1,27 @@
+# my-scenario.yml
+config:
+  target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
+  phases:
+    - duration: 60 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 10 # 1초당 몇 명의 부하를 줄 것인지
+      maxVusers: 10 # 최대 접속할수 있는 유저 수
+  defaults:
+    headers:
+      "User-Agent": "Artillery"
+
+scenarios:
+  - name: My sample scenario
+    flow:
+      - get:
+          url: "/"
+      - think: 60
+
+
+
+
+# 로드 테스트 로그 파일 명령어 npx artillery run -o signup-signout/60-to-100 signup-signout/signup-signout.yml
+# 로그 테스트 html view - npx artillery report signup-signout/60-to-100 
+
+# 로드 테스트 실행 명령어 npx artillery run signup-signout/signup-signout.yml
+
+# npx artillery run -o test.json test.yml

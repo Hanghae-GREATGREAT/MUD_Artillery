@@ -1,0 +1,154 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.My sample scenario": 10,
+      "vusers.created": 10,
+      "engine.socketio.emit": 30,
+      "vusers.skipped": 590,
+      "vusers.failed": 0,
+      "vusers.completed": 10
+    },
+    "rates": {
+      "engine.socketio.emit_rate": 0
+    },
+    "firstCounterAt": 1668606369771,
+    "firstHistogramAt": 1668606433865,
+    "lastCounterAt": 1668606434390,
+    "lastHistogramAt": 1668606434390,
+    "firstMetricAt": 1668606369771,
+    "lastMetricAt": 1668606434390,
+    "period": 1668606430000,
+    "summaries": {
+      "vusers.session_length": {
+        "min": 64063.7,
+        "max": 64098.9,
+        "count": 10,
+        "p50": 64236,
+        "median": 64236,
+        "p75": 64236,
+        "p90": 64236,
+        "p95": 64236,
+        "p99": 64236,
+        "p999": 64236
+      }
+    },
+    "histograms": {
+      "vusers.session_length": {
+        "min": 64063.7,
+        "max": 64098.9,
+        "count": 10,
+        "p50": 64236,
+        "median": 64236,
+        "p75": 64236,
+        "p90": 64236,
+        "p95": 64236,
+        "p99": 64236,
+        "p999": 64236
+      }
+    }
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.My sample scenario": 4,
+        "vusers.created": 4,
+        "engine.socketio.emit": 3
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 3
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668606369771,
+      "lastCounterAt": 1668606369956,
+      "firstMetricAt": 1668606369771,
+      "lastMetricAt": 1668606369956,
+      "period": "1668606360000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 94,
+        "engine.socketio.emit": 27,
+        "vusers.created_by_name.My sample scenario": 6,
+        "vusers.created": 6
+      },
+      "rates": {
+        "engine.socketio.emit_rate": 10
+      },
+      "engine.socketio.emit_rate": null,
+      "firstCounterAt": 1668606370016,
+      "lastCounterAt": 1668606379954,
+      "firstMetricAt": 1668606370016,
+      "lastMetricAt": 1668606379954,
+      "period": "1668606370000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 100
+      },
+      "rates": {},
+      "firstCounterAt": 1668606380015,
+      "lastCounterAt": 1668606389954,
+      "firstMetricAt": 1668606380015,
+      "lastMetricAt": 1668606389954,
+      "period": "1668606380000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 100
+      },
+      "rates": {},
+      "firstCounterAt": 1668606390015,
+      "lastCounterAt": 1668606399954,
+      "firstMetricAt": 1668606390015,
+      "lastMetricAt": 1668606399954,
+      "period": "1668606390000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 100
+      },
+      "rates": {},
+      "firstCounterAt": 1668606400015,
+      "lastCounterAt": 1668606409954,
+      "firstMetricAt": 1668606400015,
+      "lastMetricAt": 1668606409954,
+      "period": "1668606400000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 100
+      },
+      "rates": {},
+      "firstCounterAt": 1668606410015,
+      "lastCounterAt": 1668606419954,
+      "firstMetricAt": 1668606410015,
+      "lastMetricAt": 1668606419954,
+      "period": "1668606410000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.skipped": 96
+      },
+      "rates": {},
+      "firstCounterAt": 1668606420015,
+      "lastCounterAt": 1668606429324,
+      "firstMetricAt": 1668606420015,
+      "lastMetricAt": 1668606429324,
+      "period": "1668606420000",
+      "summaries": {},
+      "histograms": {}
+    }
+  ]
+}
