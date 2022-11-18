@@ -10,16 +10,16 @@ config:
       - "characterId"
   target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
   phases:
+    # - duration: 60 # 몇 초 동안 테스트 할것인지
+    #   arrivalRate: 5 # 1초당 몇 명의 부하를 줄 것인지
+    #   name: Warm up
+    #   # arrivalCount: 1 # duration 기간 동안 생성할 유저 수
+    #   # maxVusers: 10 # 최대 접속할수 있는 유저 수
+    # - duration: 120 # 몇 초 동안 테스트 할것인지
+    #   arrivalRate: 5 # 1초당 몇 명의 부하를 줄 것인지
+    #   rampTo: 50 # 단계가 끝날 쯤 50명의 vuser 도달
+    #   name: Ramp up load
     - duration: 60 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 5 # 1초당 몇 명의 부하를 줄 것인지
-      name: Warm up
-      # arrivalCount: 1 # duration 기간 동안 생성할 유저 수
-      # maxVusers: 10 # 최대 접속할수 있는 유저 수
-    - duration: 120 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 5 # 1초당 몇 명의 부하를 줄 것인지
-      rampTo: 50 # 단계가 끝날 쯤 50명의 vuser 도달
-      name: Ramp up load
-    - duration: 600 # 몇 초 동안 테스트 할것인지
       arrivalRate: 50 # 1초당 몇 명의 부하를 줄 것인지
       name: Sustained load
   defaults:
@@ -39,14 +39,14 @@ scenarios:
           data: 
             "line": "load"
             "user": {}
-      - think: 1
+      - think: 2
 
       # 로그인 선택
       - emit:
           channel: "front"
           data: 
             "line": "in"
-      - think: 1
+      - think: 2
 
       # 아이디 입력
       - emit:
@@ -55,7 +55,7 @@ scenarios:
             "line": "{{ username }}"
             "option": "20"
             "user": {}
-      - think: 1
+      - think: 2
 
       # 비밀번호 입력
       - emit:
@@ -64,7 +64,7 @@ scenarios:
             "option": "21"
             "line": "1234"
             "user": {"username": "{{ username }}"}
-      - think: 1
+      - think: 2
       
       # 로그아웃
       - emit:
@@ -72,7 +72,7 @@ scenarios:
           data: 
             "line": "out"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
-      - think: 1
+      - think: 2
     # count: 60
       # - think: 10
 
@@ -80,10 +80,5 @@ scenarios:
 
 
 # 로드 테스트 로그 파일 명령어 npx artillery run -o login-logout/login-logoutreport login-logout/login-logout.yml
+
 # 로그 테스트 html view - npx artillery report login-logout/login-logoutreport
-
-# 로드 테스트 실행 명령어 npx artillery run login-logout/login-logout.yml
-
-# npx artillery run -o login-logout/60-to-10-report-server login-logout/login-logout.yml
-
-# npx artillery report login-logout/60-to-10-report-server

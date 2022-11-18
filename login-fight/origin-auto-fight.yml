@@ -1,0 +1,63 @@
+# my-scenario.yml
+config:
+  payload:
+    path: "../data/characterData.csv"
+    fields:
+      - "username"
+      - "userId"
+      - "characterId"
+  target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
+  phases:
+    - duration: 60 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 5 # 1초당 몇 명의 부하를 줄 것인지
+      maxVusers: 5 # 최대 접속할수 있는 유저 수
+  engines:
+   socketio-v3: {}
+
+scenarios:
+  - name: "auto-fight"
+    engine: socketio-v3
+    flow:
+      # 던전 입장 선택
+      - emit:
+          channel: "front"
+          data: 
+            "line": "d"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 2
+
+      # 던전 난이도 선택
+      - emit:
+          channel: "dungeon"
+          data: 
+            "line": "입장 1"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 2
+
+      # 전투 빙식 선택
+      - emit:
+          channel: "battle"
+          data: 
+            "line": "자동"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      - think: 60
+
+      # 자동전투 중단
+      - emit:
+          channel: "autoBattle"
+          data: 
+            "line": "중단"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+
+      # 로그아웃
+      - emit:
+          channel: "front"
+          data: 
+            "line": "out"
+            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+
+
+# 로드 테스트 로그 파일 명령어 npx artillery run -o login-fight/60-to-5-20221118T2340 login-fight/origin-auto-fight.yml
+
+# 로그 테스트 html view - npx artillery report login-fight/60-to-5-20221118T2340
+
