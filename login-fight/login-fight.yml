@@ -10,17 +10,17 @@ config:
       - "username"
       - "userId"
       - "characterId"
-  target: "http://localhost:8080"
+  target: "http://greatapp-env-1.ap-northeast-2.elasticbeanstalk.com/"
   phases:
-    - duration: 120 # 몇 초 동안 테스트 할것인지
-      arrivalRate: 100 # 1초당 몇 명의 부하를 줄 것인지
-      maxVusers: 100 # 최대 접속할수 있는 유저 수
+    - duration: 60 # 몇 초 동안 테스트 할것인지
+      arrivalRate: 30 # 1초당 몇 명의 부하를 줄 것인지
+      maxVusers: 30 # 최대 접속할수 있는 유저 수
   engines:
    socketio-v3: {}
   #  rediscluster: {}
 
 scenarios:
-  - name: My sample scenario
+  - name: "auto-fight"
     engine: socketio-v3
     flow:
       # # 첫 화면
@@ -76,7 +76,7 @@ scenarios:
       - emit:
           channel: "battle"
           data: 
-            "line": "자동"
+            "line": "자동1"
             "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
       - think: 60
 
@@ -89,12 +89,12 @@ scenarios:
       # # 15초 동안 아무것도 하지 않은 다음 연결 해제
       # - think: 30
 
-      # 자동전투 중단
-      - emit:
-          channel: "autoBattle"
-          data: 
-            "line": "중단"
-            "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
+      # # 자동전투 중단
+      # - emit:
+      #     channel: "autoBattle"
+      #     data: 
+      #       "line": "중단"
+      #       "user": {"username": "{{ username }}","userId": "{{ userId }}","characterId": "{{ characterId }}"}
 
       # # 로그아웃
       # - emit:
